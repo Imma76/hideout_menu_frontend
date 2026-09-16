@@ -1,96 +1,68 @@
-const SECTION_LABELS = {
-  food: 'Food Menu',
-  drinks: 'Drinks & Beverages',
-};
-const SECTION_ORDER = ['food', 'drinks'];
 const CACHE_KEY = 'hideout-menu-cache-v1';
 
 function formatPrice(price) {
   return `₦${Number(price).toLocaleString('en-NG')}`;
 }
 
-function renderMenu(categories, items) {
+function renderSection(categories, items, sectionKey) {
   const root = document.getElementById('menu-root');
   const status = document.getElementById('status');
 
   const availableItems = items.filter((item) => item.available);
+  const categoriesInSection = categories.filter((c) => c.section === sectionKey);
 
-  if (categories.length === 0 || availableItems.length === 0) {
-    status.textContent = 'The menu is being updated. Please check back soon.';
-    return;
-  }
-
-  status.textContent = '';
   root.innerHTML = '';
 
-  SECTION_ORDER.forEach((section) => {
-    const categoriesInSection = categories.filter((c) => c.section === section);
-    if (categoriesInSection.length === 0) return;
-
-    const sectionHasItems = categoriesInSection.some((category) =>
-      availableItems.some((item) => item.category && item.category._id === category._id),
+  categoriesInSection.forEach((category) => {
+    const itemsInCategory = availableItems.filter(
+      (item) => item.category && item.category._id === category._id,
     );
-    if (!sectionHasItems) return;
 
-    const sectionEl = document.createElement('section');
-    sectionEl.className = 'menu-section';
+    if (itemsInCategory.length === 0) return;
 
-    const sectionTitle = document.createElement('h2');
-    sectionTitle.className = 'section-title';
-    sectionTitle.textContent = SECTION_LABELS[section] ?? section;
-    sectionEl.appendChild(sectionTitle);
+    const block = document.createElement('div');
+    block.className = 'category-block';
 
-    categoriesInSection.forEach((category) => {
-      const itemsInCategory = availableItems.filter(
-        (item) => item.category && item.category._id === category._id,
-      );
+    const title = document.createElement('h2');
+    title.className = 'category-title';
+    title.textContent = category.name;
+    block.appendChild(title);
 
-      if (itemsInCategory.length === 0) return;
+    itemsInCategory.forEach((item) => {
+      const row = document.createElement('div');
+      row.className = 'menu-item';
 
-      const block = document.createElement('div');
-      block.className = 'category-block';
+      const info = document.createElement('div');
+      info.className = 'item-info';
 
-      const title = document.createElement('h3');
-      title.className = 'category-title';
-      title.textContent = category.name;
-      block.appendChild(title);
+      const name = document.createElement('div');
+      name.className = 'item-name';
+      name.textContent = item.name;
+      info.appendChild(name);
 
-      itemsInCategory.forEach((item) => {
-        const row = document.createElement('div');
-        row.className = 'menu-item';
+      if (item.description) {
+        const desc = document.createElement('div');
+        desc.className = 'item-description';
+        desc.textContent = item.description;
+        info.appendChild(desc);
+      }
 
-        const info = document.createElement('div');
-        info.className = 'item-info';
+      const price = document.createElement('div');
+      price.className = 'item-price';
+      price.textContent = formatPrice(item.price);
 
-        const name = document.createElement('div');
-        name.className = 'item-name';
-        name.textContent = item.name;
-        info.appendChild(name);
-
-        if (item.description) {
-          const desc = document.createElement('div');
-          desc.className = 'item-description';
-          desc.textContent = item.description;
-          info.appendChild(desc);
-        }
-
-        const price = document.createElement('div');
-        price.className = 'item-price';
-        price.textContent = formatPrice(item.price);
-
-        row.appendChild(info);
-        row.appendChild(price);
-        block.appendChild(row);
-      });
-
-      sectionEl.appendChild(block);
+      row.appendChild(info);
+      row.appendChild(price);
+      block.appendChild(row);
     });
 
-    root.appendChild(sectionEl);
+    root.appendChild(block);
   });
 
   if (root.children.length === 0) {
-    root.innerHTML = '<p class="empty-state">The menu is being updated. Please check back soon.</p>';
+    status.textContent = 'This section is being updated. Please check back soon.';
+  } else {
+    status.textContent = '';
   }
 }
 
@@ -111,17 +83,13 @@ function writeCache(data) {
   }
 }
 
-async function loadMenu() {
-  const status = document.getElementById('status');
-
+async function loadSection(sectionKey) {
   // Render whatever we last saw instantly, before any network round trip —
   // the fetch below always runs anyway, so this never shows stale data for
   // longer than one page load.
   const cached = readCache();
   if (cached) {
-    renderMenu(cached.categories, cached.items);
-  } else {
-    status.textContent = 'Loading menu…';
+    renderSection(cached.categories, cached.items, sectionKey);
   }
 
   try {
@@ -130,13 +98,17 @@ async function loadMenu() {
 
     const { categories, items } = await res.json();
     writeCache({ categories, items });
-    renderMenu(categories, items);
+    renderSection(categories, items, sectionKey);
   } catch (err) {
     console.error(err);
     if (!cached) {
-      status.textContent = 'Could not load the menu right now. Please try again shortly.';
+      document.getElementById('status').textContent =
+        'Could not load the menu right now. Please try again shortly.';
     }
   }
 }
 
-loadMenu();
+const sectionKey = document.body.dataset.section;
+if (sectionKey) {
+  loadSection(sectionKey);
+}
