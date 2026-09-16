@@ -115,6 +115,10 @@ body {
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
 }
 
+.section-card img.ciga-wordmark {
+  max-height: 85px;
+}
+
 /* ---------- Section screen ---------- */
 .section-view {
   min-height: 100vh;
