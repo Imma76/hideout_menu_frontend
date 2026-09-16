@@ -88,7 +88,7 @@ body {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 110px;
+  height: 140px;
   padding: 1.5rem 1rem;
   background: rgba(244, 237, 222, 0.1);
   border: 1px solid rgba(244, 237, 222, 0.35);
@@ -110,7 +110,7 @@ body {
   width: auto;
   height: 100%;
   max-width: 260px;
-  max-height: 90px;
+  max-height: 120px;
   margin: 0 auto;
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
 }
