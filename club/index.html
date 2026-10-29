@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Club Drinks — The Hideout</title>
+    <meta
+      name="description"
+      content="Club bottle menu at The Hideout …at lastdrop: champagne, cognac, whiskey, tequila, wine and more."
+    />
+    <meta name="theme-color" content="#0b0a09" />
+    <link rel="canonical" href="https://thehideoutrestroandlakesidelounge.com/club" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Club Drinks — The Hideout" />
+    <meta property="og:description" content="Champagne, cognac, whiskey, tequila and more, by the bottle." />
+    <meta property="og:url" content="https://thehideoutrestroandlakesidelounge.com/club" />
+    <meta property="og:image" content="https://thehideoutrestroandlakesidelounge.com/assets/logo.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="/club/club.css?v=1" />
+  </head>
+  <body>
+    <div id="club-root" class="club-root">
+      <p class="club-status">Loading…</p>
+    </div>
+
+    <dialog id="club-sheet" class="club-sheet" aria-labelledby="sheet-name">
+      <button type="button" class="sheet-close" id="sheet-close" aria-label="Close">×</button>
+      <div class="sheet-media" id="sheet-media"></div>
+      <p class="sheet-cat" id="sheet-cat"></p>
+      <h2 class="sheet-name" id="sheet-name"></h2>
+      <p class="sheet-desc" id="sheet-desc"></p>
+      <p class="sheet-price" id="sheet-price"></p>
+    </dialog>
+
+    <script src="/config.js"></script>
+    <script src="/club/club-config.js?v=1"></script>
+    <script src="/club/club.js?v=1"></script>
+    <script>
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+  </body>
+</html>

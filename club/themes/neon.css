@@ -1,0 +1,189 @@
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap");
+
+/* Neon Afterhours: streaming-app layout, one featured bottle, a swipe row per spirit. */
+:root {
+  --c-bg: #07060d;
+  --c-surface: #120f22;
+  --c-line: #251f45;
+  --c-fg: #efeaff;
+  --c-muted: #8d86b3;
+  --c-accent: #7cf3ff;
+  --c-pink: #ff4fd8;
+  --c-sheet: #120f22;
+  --c-font-display: "Syne", system-ui, sans-serif;
+  --c-font-body: "DM Sans", system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+.n-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 36px 16px 10px;
+}
+.n-top .club-logo {
+  margin: 0;
+  width: 140px;
+}
+.n-live {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-pink);
+  border: 1px solid var(--c-pink);
+  border-radius: 999px;
+  padding: 5px 12px;
+  box-shadow: 0 0 14px rgba(255, 79, 216, 0.45);
+  animation: n-pulse 2.4s ease-in-out infinite;
+}
+@keyframes n-pulse {
+  50% {
+    box-shadow: 0 0 4px rgba(255, 79, 216, 0.2);
+  }
+}
+
+.n-hero {
+  position: relative;
+  display: block;
+  width: calc(100% - 32px);
+  margin: 10px 16px 6px;
+  height: 230px;
+  border: 0;
+  border-radius: 22px;
+  overflow: hidden;
+  text-align: left;
+  cursor: pointer;
+  background: radial-gradient(120% 90% at 72% 18%, #4a1cff 0%, #1b0b4d 45%, #0b0718 80%);
+}
+.n-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 22px);
+  pointer-events: none;
+}
+.n-hero-t {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  z-index: 2;
+  max-width: 58%;
+  display: flex;
+  flex-direction: column;
+}
+.n-kick {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+}
+.n-big {
+  margin: 8px 0 10px;
+  font-family: var(--c-font-display);
+  font-weight: 800;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.n-hp {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--c-pink);
+  font-variant-numeric: tabular-nums;
+}
+.n-hd {
+  font-size: 12px;
+  color: #c9c2ee;
+  margin-top: 2px;
+}
+.n-hero-img {
+  position: absolute;
+  right: 18px;
+  bottom: -4px;
+  display: flex;
+  align-items: flex-end;
+  filter: drop-shadow(0 0 18px rgba(255, 79, 216, 0.55));
+}
+
+.n-sec {
+  scroll-margin-top: 16px;
+}
+.n-rowh {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: 24px 16px 10px;
+}
+.n-rowh h2 {
+  margin: 0;
+  font-family: var(--c-font-display);
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.n-rowh span {
+  font-size: 12px;
+  color: var(--c-muted);
+  white-space: nowrap;
+}
+.n-rail {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0 16px 6px;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 16px;
+}
+.n-rail::-webkit-scrollbar {
+  display: none;
+}
+.n-tile {
+  flex: none;
+  width: 132px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  border-radius: 16px;
+  padding: 10px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.n-tile:hover {
+  border-color: var(--c-pink);
+  box-shadow: 0 0 16px rgba(255, 79, 216, 0.25);
+}
+.n-img {
+  height: 104px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  border-radius: 12px;
+  background: radial-gradient(80% 70% at 50% 100%, rgba(124, 243, 255, 0.22), transparent 70%);
+}
+.n-n {
+  margin: 8px 0 2px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.n-p {
+  margin-top: auto;
+  font-size: 12px;
+  color: var(--c-accent);
+  font-variant-numeric: tabular-nums;
+}
+.club-sheet .sheet-name {
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 26px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .n-live {
+    animation: none;
+  }
+}
