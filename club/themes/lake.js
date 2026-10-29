@@ -6,7 +6,7 @@ window.ClubTheme = {
       <header class="l-top">
         <div class="l-moon" aria-hidden="true"></div>
         <img class="club-logo" src="${LOGO}" alt="the Hideout …at lastdrop" width="210" height="82" />
-        <p class="l-sub">by the water, after dark</p>
+        <p class="l-sub">Till the last drop</p>
       </header>
       <nav class="l-tabs" aria-label="Categories">
         ${groups.map((g) => `<a href="#${g.id}" class="l-tab" data-target="${g.id}">${esc(g.name)}</a>`).join("")}
