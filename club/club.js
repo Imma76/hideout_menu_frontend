@@ -152,10 +152,10 @@
     return new Promise((resolve, reject) => {
       const link = document.createElement("link");
       link.rel = "stylesheet";
-      link.href = `/club/themes/${theme}.css?v=1`;
+      link.href = `/club/themes/${theme}.css?v=2`;
       document.head.appendChild(link);
       const script = document.createElement("script");
-      script.src = `/club/themes/${theme}.js?v=1`;
+      script.src = `/club/themes/${theme}.js?v=2`;
       script.onload = resolve;
       script.onerror = reject;
       document.head.appendChild(script);
