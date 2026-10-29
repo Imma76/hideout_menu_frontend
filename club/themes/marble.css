@@ -1,0 +1,245 @@
+@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Manrope:wght@400;500;600&display=swap");
+
+/* Marble Bar Top: big bottles at eye level on a veined black marble counter, bar lights blurred behind. */
+:root {
+  --c-bg: #0b0907;
+  --c-fg: #f4efe7;
+  --c-muted: #a99c86;
+  --c-accent: #e3c27d;
+  --c-line: #3a332b;
+  --c-sheet: #12100d;
+  --c-font-display: "Bodoni Moda", Georgia, serif;
+  --c-font-body: "Manrope", system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+.mb-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(rgba(8, 6, 5, 0.25), rgba(8, 6, 5, 0.55) 22%, rgba(8, 6, 5, 0.86) 42%, rgba(8, 6, 5, 0.96) 70%),
+    url(/assets/club/bokeh.webp) 50% 0 / auto 62% no-repeat,
+    var(--c-bg);
+}
+@media (min-aspect-ratio: 3/4) {
+  .mb-bg {
+    background-size: auto, cover, auto;
+  }
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.mb-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 44px 20px 4px;
+}
+.mb-top .club-logo {
+  margin: 0;
+  width: min(160px, 46vw);
+}
+.mb-top span {
+  padding-bottom: 6px;
+  font-family: var(--c-font-display);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--c-accent);
+}
+
+.mb-chips {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 14px 20px 12px;
+  background: linear-gradient(rgba(11, 9, 7, 0.9) 70%, rgba(11, 9, 7, 0));
+}
+.mb-chips::-webkit-scrollbar {
+  display: none;
+}
+.mb-chip {
+  flex: none;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--c-fg);
+  text-decoration: none;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.mb-chip.is-active {
+  background: var(--c-fg);
+  border-color: var(--c-fg);
+  color: #16110a;
+  font-weight: 600;
+}
+
+.mb-sec {
+  scroll-margin-top: 64px;
+}
+.mb-sec h2 {
+  margin: 22px 20px 0;
+  font-family: var(--c-font-display);
+  font-weight: 400;
+  font-size: 32px;
+  letter-spacing: 0.01em;
+}
+.mb-sec h2 small {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--c-font-body);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+.mb-rail {
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 6px;
+}
+.mb-rail::-webkit-scrollbar {
+  display: none;
+}
+.mb-track {
+  position: relative;
+  display: flex;
+  width: max-content;
+  min-width: 100%;
+  padding: 0 6px;
+}
+.mb-track::after {
+  content: "";
+  position: absolute;
+  inset: 250px 0 auto 0;
+  height: 58px;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.15) 55%, rgba(255, 255, 255, 0.07) 96%, rgba(0, 0, 0, 0.4)),
+    url(/assets/club/marble.webp) 0 0 / 560px auto;
+}
+.mb-track::before {
+  content: "";
+  position: absolute;
+  inset: 308px 0 auto 0;
+  height: 10px;
+  background: linear-gradient(#141210, #050404);
+}
+.mb-scene {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: 178px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  padding: 0 8px;
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+}
+.mb-stand {
+  position: relative;
+  height: 262px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.mb-stand::before {
+  content: "";
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  width: 150px;
+  height: 200px;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(255, 214, 150, 0.2), rgba(255, 214, 150, 0));
+}
+.mb-stand > * {
+  position: relative;
+  z-index: 2;
+  max-width: 100%;
+}
+.mb-stand .bottle-img {
+  filter: contrast(1.05) drop-shadow(0 0 1px rgba(255, 230, 190, 0.35));
+  transition: transform 0.25s ease;
+}
+.mb-scene:hover .mb-stand .bottle-img {
+  transform: translateY(-3px);
+}
+.mb-stand::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.85), transparent 70%);
+  z-index: 3;
+}
+.mb-refl {
+  position: relative;
+  z-index: 1;
+  height: 46px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  transform: scaleY(-1);
+  opacity: 0.28;
+  filter: blur(1.2px);
+  -webkit-mask-image: linear-gradient(to top, #000, transparent 85%);
+  mask-image: linear-gradient(to top, #000, transparent 85%);
+}
+.mb-refl > * {
+  align-self: flex-end;
+  max-width: 100%;
+}
+.mb-info {
+  display: flex;
+  flex-direction: column;
+  padding: 22px 4px 18px;
+}
+.mb-n {
+  font-family: var(--c-font-display);
+  font-size: 18px;
+  line-height: 1.15;
+}
+.mb-d {
+  margin-top: 3px;
+  font-size: 11.5px;
+  color: var(--c-muted);
+}
+.mb-p {
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--c-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.club-sheet {
+  background: linear-gradient(rgba(14, 12, 10, 0.9), rgba(10, 8, 7, 0.98)), url(/assets/club/marble.webp) center / cover;
+}
+.club-sheet .sheet-name {
+  font-weight: 400;
+}

@@ -1,0 +1,218 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Cormorant+SC:wght@500;600&display=swap");
+
+/* The Back Bar: backlit wooden shelves on a plaster wall, brass plaques, labels under each bottle. */
+:root {
+  --c-bg: #120c08;
+  --c-fg: #f1e6d3;
+  --c-muted: #a8957a;
+  --c-accent: #d9b871;
+  --c-line: #4a3a28;
+  --c-sheet: #1c130c;
+  --c-font-display: "Cormorant Garamond", Georgia, serif;
+  --c-font-body: "Cormorant Garamond", Georgia, serif;
+  color-scheme: dark;
+}
+
+.bb-wall {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(80% 28% at 50% 0%, rgba(255, 176, 96, 0.26), transparent 70%),
+    linear-gradient(rgba(48, 26, 12, 0.62), rgba(14, 8, 5, 0.88)),
+    url(/assets/club/wall.webp) center / cover;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.bb-top {
+  padding: 46px 16px 6px;
+  text-align: center;
+}
+.bb-top .club-logo {
+  width: min(220px, 62vw);
+  filter: drop-shadow(0 0 14px rgba(255, 190, 120, 0.45)) drop-shadow(0 0 2px rgba(255, 220, 180, 0.6));
+}
+.bb-sub {
+  margin: 8px 0 0;
+  font-family: "Cormorant SC", serif;
+  font-size: 13px;
+  letter-spacing: 0.32em;
+  color: var(--c-accent);
+}
+
+.bb-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 14px 18px 0;
+  background: linear-gradient(rgba(22, 13, 8, 0.96) 75%, rgba(22, 13, 8, 0));
+}
+.bb-tabs::-webkit-scrollbar {
+  display: none;
+}
+.bb-tab {
+  flex: none;
+  padding-bottom: 8px;
+  font-family: "Cormorant SC", serif;
+  font-size: 15px;
+  letter-spacing: 0.14em;
+  color: var(--c-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 1px solid transparent;
+}
+.bb-tab.is-active {
+  color: var(--c-fg);
+  border-color: var(--c-accent);
+}
+
+.bb-sec {
+  scroll-margin-top: 54px;
+  padding-bottom: 8px;
+}
+.bb-plaque {
+  display: block;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  margin: 30px auto 6px;
+  padding: 6px 20px 5px;
+  font-family: "Cormorant SC", serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.22em;
+  color: #2b1d08;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #7d5e2b 0%, #d8b56c 38%, #f1d79a 50%, #b08a46 62%, #8a6a33 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 245, 215, 0.55),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+    0 3px 8px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 1px 0 rgba(255, 236, 190, 0.55);
+}
+
+.bb-shelf {
+  margin-top: 12px;
+}
+.bb-bays,
+.bb-labels {
+  display: flex;
+  justify-content: center;
+  padding: 0 6px;
+}
+.bb-bays {
+  position: relative;
+  height: 200px;
+  align-items: flex-end;
+}
+.bb-bays::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 156px;
+  background: linear-gradient(to top, rgba(255, 170, 80, 0.5), rgba(255, 170, 80, 0.12) 45%, transparent 85%);
+  pointer-events: none;
+}
+.bb-bay,
+.bb-label {
+  flex: 0 0 33.333%;
+  min-width: 0;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.bb-bay {
+  position: relative;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 0 6px;
+}
+.bb-bay > * {
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+}
+.bb-bay .bottle-img {
+  filter: brightness(0.96) contrast(1.04) drop-shadow(-1px 0 0 rgba(255, 200, 140, 0.25));
+  transition: transform 0.25s ease;
+}
+.bb-bay:hover .bottle-img {
+  transform: translateY(-3px);
+}
+.bb-bay::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 62%;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.85), transparent 70%);
+  z-index: 2;
+}
+.bb-plank {
+  position: relative;
+  z-index: 3;
+  height: 15px;
+  margin: 0 2px;
+  border-radius: 1px;
+  background:
+    linear-gradient(to bottom, rgba(255, 214, 160, 0.38) 0, rgba(255, 214, 160, 0) 22%, rgba(0, 0, 0, 0.15) 60%, rgba(0, 0, 0, 0.6) 100%),
+    url(/assets/club/wood.webp) center / 260px auto;
+  box-shadow:
+    0 14px 20px -6px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 rgba(255, 220, 170, 0.25);
+}
+.bb-labels {
+  padding-top: 12px;
+}
+.bb-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 4px;
+  text-align: center;
+}
+.bb-n {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.bb-p {
+  margin-top: 3px;
+  font-family: "Cormorant SC", serif;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--c-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.club-sheet {
+  background:
+    radial-gradient(70% 40% at 50% 0%, rgba(255, 176, 96, 0.18), transparent 70%),
+    linear-gradient(rgba(36, 22, 12, 0.92), rgba(18, 11, 7, 0.97)),
+    url(/assets/club/wall.webp) center / cover;
+}
+.club-sheet .sheet-cat {
+  font-family: "Cormorant SC", serif;
+  font-size: 14px;
+}
+.club-footer {
+  font-size: 14px;
+}

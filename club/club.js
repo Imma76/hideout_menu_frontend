@@ -1,5 +1,5 @@
 (function () {
-  const THEMES = ["shelf", "neon", "lake"];
+  const THEMES = ["shelf", "neon", "lake", "backbar", "marble"];
   const CACHE_KEY = "hideout-club-cache-v1";
   const LOGO = "/assets/club-logo.webp";
 
