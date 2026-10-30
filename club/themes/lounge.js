@@ -75,6 +75,8 @@ window.ClubTheme = {
       highball: '<path d="M7 6h10l-1.2 14.2a1 1 0 0 1-1 .8H9.2a1 1 0 0 1-1-.8z"/><path d="M14 6l2-4h2M7.4 10h9.2"/>',
       can: '<path d="M8 3h8l1 2v14l-1 2H8l-1-2V5z"/><path d="M7 7h10M7 17h10"/>',
       martini: '<path d="M4 4h16l-8 9z"/><path d="M12 13v7M8 21h8"/>',
+      cloche: '<path d="M3 18h18M5 18a7 7 0 0 1 14 0"/><path d="M12 11V9M10.5 9h3"/>',
+      cigar: '<rect x="2.5" y="13" width="17" height="4" rx="1.2"/><path d="M15.5 13v4M21.5 13v4M18 10c0-2 2-2 2-4M21 10c0-2-1.5-2.5-1-5"/>',
     };
     const KINDS = [
       [/champ|sparkl|prosecco/, "flute", "Brut & rosé"],
@@ -86,6 +88,8 @@ window.ClubTheme = {
       [/cream|liqueur/, "cordial", "Liqueur"],
       [/juice/, "highball", "Juices & mixers"],
       [/soft|soda|water/, "can", "Ice cold"],
+      [/bite|food|kitchen|grill|chops|snack/, "cloche", "From the kitchen"],
+      [/cigar|shisha|hookah|smok/, "cigar", "Light up"],
     ];
     const kind = (g) => {
       const n = g.name.toLowerCase();
@@ -109,26 +113,76 @@ window.ClubTheme = {
         <svg class="ls-chev" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
       </button>`;
 
+    // Food has no bottle shot, so it reads like a printed menu card: name, dotted leader, price.
+    const bite = (i) => `
+      <div class="ls-bite">
+        <span class="ls-bite-n">${esc(i.name)}</span>
+        <span class="ls-bite-dots" aria-hidden="true"></span>
+        <span class="ls-bite-p">${naira(i.price)}</span>
+        ${i.description ? `<span class="ls-bite-d">${esc(i.description)}</span>` : ""}
+      </div>`;
+
+    const section = (g) => {
+      const k = kind(g);
+      const body =
+        g.tab === "drinks"
+          ? `<div class="ls-list">${g.items.map(row).join("")}</div>`
+          : `<div class="ls-bites">${g.items.map(bite).join("")}</div>`;
+      return `
+        <section class="ls-sec" id="${g.id}">
+          <h2 class="ls-h">${icon(k.icon)}<span class="ls-title">${esc(g.name)}</span><small>${esc(k.sub)}</small></h2>
+          ${body}
+        </section>`;
+    };
+    const chips = (gs) =>
+      gs.length > 1
+        ? `<nav class="ls-chips" aria-label="Categories">${gs
+            .map((g) => `<a href="#${g.id}" class="ls-chip" data-target="${g.id}">${esc(g.name)}</a>`)
+            .join("")}</nav>`
+        : "";
+
+    // Drinks, food and smoking each get a tab; a tab with one category is named after it.
+    const TAB_NAMES = { drinks: "Drinks", food: "Food", smoke: "Smoke" };
+    const tabs = Object.keys(TAB_NAMES)
+      .map((key) => ({ key, groups: groups.filter((g) => g.tab === key) }))
+      .filter((t) => t.groups.length);
+    const label = (t) => (t.groups.length === 1 && t.key !== "drinks" ? t.groups[0].name : TAB_NAMES[t.key]);
+
     root.innerHTML = `
       <header class="ls-top">
         <img class="club-logo" src="${LOGO}" alt="the Hideout …at lastdrop" width="150" height="58" />
         <p class="ls-tag"><span>Club drinks</span><span>Till the</span><span>last drop</span></p>
       </header>
-      <nav class="ls-chips" aria-label="Categories">
-        ${groups.map((g) => `<a href="#${g.id}" class="ls-chip" data-target="${g.id}">${esc(g.name)}</a>`).join("")}
-      </nav>
-      ${groups
-        .map((g) => {
-          const k = kind(g);
-          return `
-        <section class="ls-sec" id="${g.id}">
-          <h2 class="ls-h">${icon(k.icon)}<span class="ls-title">${esc(g.name)}</span><small>${esc(k.sub)}</small></h2>
-          <div class="ls-list">${g.items.map(row).join("")}</div>
-        </section>`;
-        })
+      ${
+        tabs.length > 1
+          ? `<div class="ls-seg" role="tablist" style="--n:${tabs.length}">${tabs
+              .map(
+                (t, k) =>
+                  `<button type="button" role="tab" id="tab-${t.key}" aria-controls="pane-${t.key}" aria-selected="${k === 0}" data-tab="${t.key}">${esc(label(t))}</button>`,
+              )
+              .join("")}</div>`
+          : ""
+      }
+      ${tabs
+        .map(
+          (t, k) => `
+        <div class="ls-pane" id="pane-${t.key}" role="tabpanel" aria-labelledby="tab-${t.key}"${k ? " hidden" : ""}>
+          ${chips(t.groups)}${t.groups.map(section).join("")}
+        </div>`,
+        )
         .join("")}
       <p class="club-footer">Prices include all applicable taxes.</p>`;
 
-    wireCategoryNav(root.querySelector(".ls-chips"), ".ls-chip");
+    root.classList.toggle("ls-tabbed", tabs.length > 1);
+    root.querySelectorAll(".ls-chips").forEach((nav) => wireCategoryNav(nav, ".ls-chip"));
+    const seg = root.querySelector(".ls-seg");
+    seg?.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-tab]");
+      if (!b) return;
+      seg.querySelectorAll("[data-tab]").forEach((x) => x.setAttribute("aria-selected", x === b));
+      root.querySelectorAll(".ls-pane").forEach((p) => (p.hidden = p.id !== "pane-" + b.dataset.tab));
+      // Start the new tab at its top, but don't jump back above the header if it's on screen.
+      if (window.scrollY > seg.offsetTop) window.scrollTo({ top: seg.offsetTop });
+    });
   },
 };

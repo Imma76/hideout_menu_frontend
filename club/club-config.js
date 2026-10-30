@@ -5,4 +5,4 @@
 // Once the client picks one: set it here, delete the other themes' .css/.js
 // files in club/themes/ (and any unused textures in assets/club/), and remove
 // their names from THEMES in club.js.
-const CLUB_THEME = "shelf";
+const CLUB_THEME = "lounge";

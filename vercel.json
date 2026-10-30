@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/", "has": [{ "type": "host", "value": "thehideoutatlastdrop.com" }], "destination": "/club/index.html" },
+    { "source": "/", "has": [{ "type": "host", "value": "www.thehideoutatlastdrop.com" }], "destination": "/club/index.html" }
+  ]
+}

@@ -109,6 +109,12 @@
   }
 
   // ---------- data ----------
+  // Which tab a category belongs to; kitchen and smoking get a text menu instead of bottle rows.
+  const TABS = [
+    ["food", /bite|food|kitchen|grill|chops|snack/],
+    ["smoke", /cigar|shisha|hookah|smok/],
+  ];
+  const tabFor = (name) => (TABS.find(([, re]) => re.test(name.toLowerCase())) || ["drinks"])[0];
   function shape(menu) {
     const cats = menu.categories
       .filter((c) => c.section === "club")
@@ -116,7 +122,12 @@
     const items = menu.items.filter((i) => i.available && i.category && i.category.section === "club");
     itemsById = new Map(items.map((i) => [i._id, i]));
     const groups = cats
-      .map((c) => ({ id: "cat-" + c._id, name: c.name, items: items.filter((i) => i.category._id === c._id) }))
+      .map((c) => ({
+        id: "cat-" + c._id,
+        name: c.name,
+        tab: tabFor(c.name),
+        items: items.filter((i) => i.category._id === c._id),
+      }))
       .filter((g) => g.items.length);
     const featured = items.filter((i) => i.featured).sort((a, b) => b.price - a.price);
     return { groups, featured, count: items.length };
@@ -152,10 +163,10 @@
     return new Promise((resolve, reject) => {
       const link = document.createElement("link");
       link.rel = "stylesheet";
-      link.href = `/club/themes/${theme}.css?v=2`;
+      link.href = `/club/themes/${theme}.css?v=3`;
       document.head.appendChild(link);
       const script = document.createElement("script");
-      script.src = `/club/themes/${theme}.js?v=2`;
+      script.src = `/club/themes/${theme}.js?v=3`;
       script.onload = resolve;
       script.onerror = reject;
       document.head.appendChild(script);
