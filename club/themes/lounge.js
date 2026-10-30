@@ -54,7 +54,6 @@ window.ClubTheme = {
       "Cooper & Thief": "Bourbon barrel-aged red · blackberry, vanilla, oak",
       "Sandeman Sweet Red": "Fine Ruby Port · plum, cherry, sweet finish",
       "Hendrick's": "Scottish gin infused with rose and cucumber",
-      "Baileys": "Irish whiskey, fresh cream, cocoa, vanilla",
       "Cranberry Juice": "Chilled · great on its own or as a mixer",
       "Chi Exotic": "Chivita Exotic · pineapple and coconut nectar",
       "Can Coke": "Coca-Cola Original Taste · ice cold",
