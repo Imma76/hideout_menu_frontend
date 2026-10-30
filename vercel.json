@@ -1,6 +1,7 @@
 {
-  "rewrites": [
-    { "source": "/", "has": [{ "type": "host", "value": "thehideoutatlastdrop.com" }], "destination": "/club/index.html" },
-    { "source": "/", "has": [{ "type": "host", "value": "www.thehideoutatlastdrop.com" }], "destination": "/club/index.html" }
+  "routes": [
+    { "src": "/", "has": [{ "type": "host", "value": "thehideoutatlastdrop.com" }], "dest": "/club/index.html" },
+    { "src": "/", "has": [{ "type": "host", "value": "www.thehideoutatlastdrop.com" }], "dest": "/club/index.html" },
+    { "handle": "filesystem" }
   ]
 }
