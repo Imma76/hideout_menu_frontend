@@ -2,6 +2,67 @@ window.ClubTheme = {
   render(root, { groups }) {
     const { esc, naira, media, wireCategoryNav, LOGO } = window.Club;
 
+    // Tasting notes shown only in this theme (the other themes keep the admin's short
+    // descriptions). If the client picks this theme, move these into the database
+    // so they can be edited in the admin, and delete this map.
+    const NOTES = {
+      "Ace of Spades": "Brut Gold · rich and creamy, white peach, brioche, honey",
+      "Dom Pérignon": "Vintage champagne · white flowers, citrus, toasted almond",
+      "Cristal": "Louis Roederer prestige cuvée · citrus, white fruit, chalk",
+      "Veuve Clicquot Brut": "Yellow Label · Pinot Noir-led, apple, brioche, vanilla",
+      "Moët & Chandon Rosé": "Rosé Impérial · strawberry, raspberry, cherry",
+      "Moët Brut": "Brut Impérial · green apple, citrus, fresh brioche",
+      "Laurent-Perrier Rosé": "Cuvée Rosé · 100% Pinot Noir, fresh red berries",
+      "Laurent-Perrier Brut": "La Cuvée · Chardonnay-led, citrus, white flowers",
+      "Belaire Rosé": "Rare Rosé · French sparkling rosé, strawberry, raspberry",
+      "Canard-Duchêne Rosé": "Authentic Rosé · Pinot Noir-led, red berries",
+      "Canard-Duchêne Brut": "Authentic Brut · Pinot Noir-led, fresh fruit, light toast",
+      "Hennessy XO": "Extra Old · candied fruit, dark chocolate, pepper",
+      "Martell XO": "Extra Old · fig, sandalwood, warm spice",
+      "Rémy Martin XO": "Fine Champagne XO · candied orange, plum, jasmine",
+      "Hennessy VSOP": "Privilège · vanilla, toasted oak, cinnamon",
+      "Rémy Martin 1738": "Accord Royal · toffee, baked bread, warm oak",
+      "Martell Blue Swift": "VSOP finished in bourbon casks · vanilla, caramel",
+      "Rémy Martin VSOP": "Fine Champagne · vanilla, ripe apricot, baked apple",
+      "Hennessy VS": "Very Special · bold and fruity, toasted almond, oak",
+      "Martell VS": "Very Special · plum, apricot, smooth finish",
+      "Rémy Martin VS": "Very Special · fresh and fruity, apricot, vanilla",
+      "Glenfiddich 23 Years": "Grand Cru · French cuvée cask finish, brioche, pear",
+      "Macallan Rare Cask": "Sherry-seasoned oak · raisin, vanilla, chocolate, orange",
+      "Glenfiddich 21 Years": "Gran Reserva · Caribbean rum cask finish, toffee, banana",
+      "Teeling 21 Years": "Rising Reserve · bourbon and ruby port casks, limited edition",
+      "Glenmorangie 18 Years": "Extremely Rare · Oloroso sherry finish, dried fruit, honey",
+      "Glenfiddich 18 Years": "Small Batch Reserve · Oloroso and bourbon oak, baked apple",
+      "Macallan 15 Years": "Double Cask · sherry oak, butterscotch, dried fruit",
+      "Glenmorangie 14 Years": "Quinta Ruban · port cask finish, dark chocolate, orange",
+      "Chivas Regal 18 Years": "Blended Scotch · dark chocolate, toffee, spice",
+      "Macallan 12 Years": "Double Cask · sherry oak, honey, citrus, ginger",
+      "Glenfiddich 15 Years": "Solera · honey, raisin, warm spice",
+      "Glenmorangie 12 Years": "The Original 12 · bourbon cask, honeyed orange, peach",
+      "Chivas Regal 15 Years": "XV · Cognac cask finish, orange, cinnamon, toffee",
+      "Teeling Single Malt": "Irish single malt · five wine casks, fig, citrus, vanilla",
+      "Observatory 20 Years": "Single grain Scotch · Signature Series, smooth and mellow",
+      "Glenmorangie 10 Years": "The Original · smooth, citrus, peach, vanilla",
+      "Chivas Regal 12 Years": "Blended Scotch · honey, vanilla, ripe apple",
+      "Don Julio": "1942 Añejo · aged 2½ years, caramel, chocolate, roasted agave",
+      "Casamigos": "Blanco · 100% blue agave, citrus, vanilla",
+      "Salamanca Blanco": "Premium Blanco tequila · crisp, peppery agave",
+      "1800 Tequila": "Silver · 100% blue agave, pepper, citrus",
+      "Olmeca": "Silver · light and smooth, sweet agave, citrus",
+      "Silk and Spice": "Portuguese red blend · blackberry, cocoa, spice",
+      "Escudo Rojo": "Chilean red blend · black fruit, pepper, soft oak",
+      "Cooper & Thief": "Bourbon barrel-aged red · blackberry, vanilla, oak",
+      "Sandeman Sweet Red": "Fine Ruby Port · plum, cherry, sweet finish",
+      "Hendrick's": "Scottish gin infused with rose and cucumber",
+      "Baileys": "Irish whiskey, fresh cream, cocoa, vanilla",
+      "Cranberry Juice": "Chilled · great on its own or as a mixer",
+      "Chi Exotic": "Chivita Exotic · pineapple and coconut nectar",
+      "Can Coke": "Coca-Cola Original Taste · ice cold",
+      "Can Sprite": "Lemon-lime soda · ice cold",
+      "Water": "Chilled bottled water",
+    };
+    groups.forEach((g) => g.items.forEach((i) => (i.description = NOTES[i.name] ?? i.description)));
+
     // Line icon and small caption under each category heading.
     const ICONS = {
       flute: '<path d="M10 2h4l.4 7.5a2.4 2.4 0 0 1-4.8 0z"/><path d="M12 12v8M9 21h6"/>',
