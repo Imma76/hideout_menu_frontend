@@ -4,11 +4,9 @@
   const LOGO = "/assets/club-logo.webp";
 
   const requested = new URLSearchParams(location.search).get("theme");
-  const theme = THEMES.includes(requested)
-    ? requested
-    : THEMES.includes(window.CLUB_THEME)
-      ? window.CLUB_THEME
-      : THEMES[0];
+  // club-config.js declares CLUB_THEME with const, which doesn't land on window.
+  const configured = typeof CLUB_THEME === "string" ? CLUB_THEME : "";
+  const theme = THEMES.includes(requested) ? requested : THEMES.includes(configured) ? configured : THEMES[0];
   document.documentElement.dataset.clubTheme = theme;
 
   const root = document.getElementById("club-root");
