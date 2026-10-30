@@ -2,6 +2,8 @@
   "routes": [
     { "src": "/", "has": [{ "type": "host", "value": "thehideoutatlastdrop.com" }], "dest": "/club/index.html" },
     { "src": "/", "has": [{ "type": "host", "value": "www.thehideoutatlastdrop.com" }], "dest": "/club/index.html" },
+    { "src": "/club/admin", "status": 308, "headers": { "Location": "/club/admin/" } },
+    { "src": "/club/admin/(.*)", "dest": "https://hideout-admin.vercel.app/$1" },
     { "handle": "filesystem" }
   ]
 }
